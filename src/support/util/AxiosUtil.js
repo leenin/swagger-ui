@@ -145,9 +145,9 @@ export default {
      */
     get(url, data = {}, {timeout = defaultTimeout, headers = {}} = {}) {
         if (url.indexOf('?') != -1) {
-            url = url + '&' + qs.stringify(data, {arrayFormat: 'brackets'})
+            url = url + '&' + qs.stringify(data, {arrayFormat: 'repeat'})
         } else {
-            url = url + '?' + qs.stringify(data, {arrayFormat: 'brackets'})
+            url = url + '?' + qs.stringify(data, {arrayFormat: 'repeat'})
         }
         return axios({
             method: 'get',
