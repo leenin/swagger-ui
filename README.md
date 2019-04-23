@@ -46,23 +46,9 @@ json文件的内容,来自swagger官网,的那个`pet`示例
 前提: 需要安装node和umiJs
 
 方式一:
-直接将根目录下的`docker/dist`目录拷贝到nginx或tomcat即可直接访问运行
-**注意:**
-此方式,部署好的项目,不能有项目名,如果存在项目名会出现找不到css和js的问题,
-解决方法是:打开dist目录下的`index.html`,为404请求的资源,修改为正确的项目名
-
-方式二:
-
-* 命令行进入`docker`目录,执行docker命令,打包为一个镜像
- `docker build -t swagger-ui-theme:1.0 .`
-* 运行docker容器
-  `docker run -d --name swagger-ui-theme -p 8088:80 swagger-ui-theme:1.0` 
-* 待容器启动之后,打开浏览器访问 http://localhost:8088
-
-方式三:
 进入项目根目录执行`umi dev`即可启动,访问
 
-方式四:
+方式二:
 进入项目根目录执行`umi build`即可启动，会生成dist目录,该目录就可以直接放到ngnix运行
 
 ## 注意点
@@ -106,12 +92,3 @@ public void downloadSingle(@RequestBody TableCodeGeneratorConfigDTO tableCodeGen
     }
 }
 ```
-
-post文件下载,详细的前后端代码实现,可参考我的简书: https://www.jianshu.com/p/a3c921b69ab1
-
-### 最后
-
-demo目录用于pages服务的发布,请注意
-
-
-
