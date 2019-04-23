@@ -1,0 +1,23 @@
+{
+  "devDependencies": {
+    "umi-plugin-react": "^1.2.3"
+  },
+  "dependencies": {
+    "antd": "^3.16.5",
+    "axios": "^0.18.0",
+    "codemirror": "^5.40.0",
+    "debounce": "^1.2.0",
+    "highlight.js": "^9.15.6",
+    "immutable": "^3.8.2",
+    "js-cookie": "^2.2.0",
+    "object-to-form": "^1.0.8",
+    "path-to-regexp": "^2.4.0",
+    "prop-types": "^15.6.2",
+    "qs": "^6.5.2",
+    "react-codemirror2": "^5.1.0",
+    "react-intl": "^2.4.0",
+    "react-markdown": "^4.0.6",
+    "react-timeout": "^1.1.2",
+    "xml-js": "^1.6.9"
+  }
+}
