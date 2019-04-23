@@ -74,7 +74,7 @@ class ApiDetailUI extends Component {
         const {clickedApi} = this.state;
         if (typeof (clickedApi) !== 'undefined' && typeof (clickedApi.responseArr) !== 'undefined' && null != clickedApi.responseArr && clickedApi.responseArr.length > 0) {
             const {formatMessage} = this.props.intl;
-            const columns = this.buildColumnHeaders();
+            const columns = this.buildRespColumnHeaders();
             const responseContentArr = [];
             let key = 0;
             for (const singleResponse of clickedApi.responseArr) {
@@ -211,6 +211,29 @@ class ApiDetailUI extends Component {
             render: (val, record, index) => {
                 return val ? yes : no
             }
+        }, {
+            title: formatMessage({id: 'summary'}),
+            width: '33%',
+            dataIndex: 'description',
+            key: 'description',
+        }];
+    }
+
+    buildRespColumnHeaders() {
+        const {formatMessage} = this.props.intl;
+        return [{
+            title: formatMessage({id: 'paramName'}),
+            width: 100,
+            dataIndex: 'name',
+            key: 'name',
+            render: (val, record, index) => {
+                return record.required ? <span style={{color:'#fa8c16'}}>{val}</span> : val
+            }
+        }, {
+            title: formatMessage({id: 'paramType'}),
+            dataIndex: 'type',
+            width: '15%',
+            key: 'type',
         }, {
             title: formatMessage({id: 'summary'}),
             width: '33%',

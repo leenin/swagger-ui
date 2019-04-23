@@ -10,7 +10,7 @@
     "req_header": "请求头参数",
     "req_path": "路径参数",
     "req_body": "请求体参数",
-    "req_form": "表单参数",
+    "req_form": "查询参数",
     "req_file":"文件参数",
     "resp_header":"响应头",
     "resp_body":"响应体",
