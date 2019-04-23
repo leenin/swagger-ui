@@ -21,7 +21,6 @@ export default {
         },
         setToken(state, token) {
             state.token = token
-            console.log(state)
         }
     },
     effects: {
