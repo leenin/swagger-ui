@@ -34,6 +34,7 @@ class TestForm extends Component {
         this.buildObjectInitVal = this.buildObjectInitVal.bind(this);
         this.onSubmitForm = this.onSubmitForm.bind(this);
         this.buildResponsePanel = this.buildResponsePanel.bind(this);
+        this.addFormParamMultipleItem = this.addFormParamMultipleItem.bind(this)
         const {clickedApi} = props;
         if (clickedApi.bodyParams.length > 0) {
             let reqData = {};
@@ -69,6 +70,7 @@ class TestForm extends Component {
                 uploading: false,
                 apiExecute: false,
                 serverResp: '',
+                multipleItemLength: {},
                 '__bodyForm': codeVal
             };
         } else {
@@ -76,6 +78,7 @@ class TestForm extends Component {
                 fileList: [],
                 uploading: false,
                 apiExecute: false,
+                multipleItemLength: {},
                 serverResp: ''
             }
         }
@@ -140,7 +143,7 @@ class TestForm extends Component {
                     <FormItem style={{marginBottom: 0}} key={'p-' + (++key)}>
                         {getFieldDecorator("__path." + paramName, {
                             initialValue: initialValue,
-                            rules: [{required: false, message: message}],
+                            rules: [{required: singleParam.required, message: message}],
                         })(
                             <Input addonBefore={paramName}/>
                         )}
@@ -160,6 +163,13 @@ class TestForm extends Component {
         }
     }
 
+    addFormParamMultipleItem(paramName) {
+        console.log(paramName)
+        const length = this.state.multipleItemLength[paramName] ? this.state.multipleItemLength[paramName] + 1 : 2
+        const multipleItemLength = this.state.multipleItemLength
+        multipleItemLength[paramName] = length
+        this.setState(multipleItemLength)
+    }
 
     /**
      * 创建表单参数表单项
@@ -182,32 +192,38 @@ class TestForm extends Component {
                 }
                 const message = required ? paramName + '是必须的!' : paramName;
                 const initialValue = singleParam.default === '' ? singleParam.example : singleParam.default;
-                const isArray = singleParam.type === 'array';
+                // const isArray = singleParam.type === 'array';
+                const isArray = singleParam.type.indexOf('array') != -1;
                 const placeholder = singleParam.description;
                 if (!isArray) {
                     formItemArr.push(
                         <FormItem style={{marginBottom: 0}} key={'f-' + (++key)}>
                             {getFieldDecorator('__form.' + paramName, {
                                 initialValue: initialValue,
-                                rules: [{required: false, message: message}],
+                                rules: [{required: singleParam.required, message: message}],
                             })(
                                 <Input addonBefore={addonBefore} placeholder={placeholder}/>
                             )}
                         </FormItem>
                     );
                 } else {
-                    for (let index = 0; index < 2; index++) {
+                    for (let index = 1; index <= (this.state.multipleItemLength[paramName] || 1); index++) {
                         formItemArr.push(
                             <FormItem style={{marginBottom: 0}} key={'f-' + (++key)}>
                                 {getFieldDecorator('__form.' + paramName + '[' + index + ']', {
                                     initialValue: '',
-                                    rules: [{required: false, message: message}],
+                                    rules: [{required: singleParam.required, message: message}],
                                 })(
                                     <Input addonBefore={paramName} placeholder={placeholder}/>
                                 )}
                             </FormItem>
                         );
                     }
+                    formItemArr.push(
+                        <Button type="dashed" onClick={this.addFormParamMultipleItem.bind(this, paramName)} block key={'f-' + (++key)}>
+                            <Icon type="plus" /> {paramName}
+                        </Button>
+                    )
                 }
             }
             return (
@@ -404,6 +420,14 @@ class TestForm extends Component {
         const apiUrlPrefix = this.props.apiUrlPrefix;
         const basePath = clickedApi.basePath;
         this.props.form.validateFields((err, values) => {
+            if (err){
+                antdMessage.error(err.__form[Object.getOwnPropertyNames(err.__form)[0]].errors[0].message)
+                that.setState({
+                    apiExecute: false
+                })
+                return
+            }
+
             let testApiUrl = httpType + apiUrlPrefix + basePath;
             let tmpWebApiPath = Util.formReplacePathVar(clickedApi.path, values['__path']);
             var regEnd=new RegExp("/$");
