@@ -1,7 +1,6 @@
 export default {
     namespace: 'IndexModel',
     state: {
-        token: '',
         leftColSpan: 5,
         centerColSpan: 19,
         defaultTheme: false,
@@ -18,9 +17,6 @@ export default {
             } else {
                 return {...state, leftColSpan: 0, centerColSpan: 16, showDrawer: true};
             }
-        },
-        setToken(state, action) {
-            return {...state, token: action.payload};
         }
     },
     effects: {
