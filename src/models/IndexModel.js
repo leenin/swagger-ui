@@ -19,8 +19,8 @@ export default {
                 return {...state, leftColSpan: 0, centerColSpan: 16, showDrawer: true};
             }
         },
-        setToken(state, token) {
-            state.token = token
+        setToken(state, action) {
+            return {...state, token: action.payload};
         }
     },
     effects: {
