@@ -14,15 +14,6 @@ function drawTestForm(clickedApi, httpKey, apiUrlPrefix, showDrawer){
     }
 }
 
-function changeToken(e) {
-    const token = e.target.value
-    if (token) {
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + e.target.value
-    } else {
-        delete axios.defaults.headers.common['Authorization']
-    }
-}
-
 function drawTestPanel(clickedApi, httpKey, apiUrlPrefix, showDrawer) {
     if (clickedApi) {
         let showUrl = httpKey + apiUrlPrefix +clickedApi.basePath;
@@ -35,10 +26,6 @@ function drawTestPanel(clickedApi, httpKey, apiUrlPrefix, showDrawer) {
         }
         return (
             <div>
-                <h3>
-                    <FormattedMessage id="auth" />
-                </h3>
-                <Input placeholder="Token" onChange={changeToken} allowClear defaultValue={window.localStorage.getItem('token')}/>
                 <h3>
                     <strong
                         className={clickedApi.method.toLowerCase()}>{clickedApi.method ? clickedApi.method.toUpperCase() : ''}</strong>
