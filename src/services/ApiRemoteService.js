@@ -1,11 +1,5 @@
 import ApiUtil from '@util/AxiosUtil.js';
 
-function addAuthorization(headerParams) {
-    const token = window.localStorage.getItem('token')
-    Object.assign(headerParams, token ? {'Authorization': 'Bearer ' + token} : null)
-    return headerParams;
-}
-
 export default {
 
     /**
@@ -17,13 +11,13 @@ export default {
     },
 
     async normalGet(url, params, headerParams) {
-        return await ApiUtil.get(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.get(url, params, {headers: headerParams});
     },
     async normalDelete(url, params, headerParams) {
-        return await ApiUtil.delete(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.delete(url, params, {headers: headerParams});
     },
     async normalBodyPost(url, params, headerParams) {
-        return await ApiUtil.bodyPost(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.bodyPost(url, params, {headers: headerParams});
     },
     /**
      * post方式实现文件下载
@@ -33,18 +27,18 @@ export default {
      * @returns {Promise<void>}
      */
     async normalBodyDownloadPost(url, params, headerParams) {
-        return await ApiUtil.bodyPostDownload(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.bodyPostDownload(url, params, {headers: headerParams});
     },
     async normalBodyPut(url, params, headerParams) {
-        return await ApiUtil.bodyPut(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.bodyPut(url, params, {headers: headerParams});
     },
     async normalFormPut(url, params, headerParams) {
-        return await ApiUtil.formPut(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.formPut(url, params, {headers: headerParams});
     },
     async normalFormPost(url, params, headerParams) {
-        return await ApiUtil.formPost(url, params, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.formPost(url, params, {headers: headerParams});
     },
     async postUpload(url, formData, headerParams){
-        return await ApiUtil.upload(url, formData, {headers: addAuthorization(headerParams)});
+        return await ApiUtil.upload(url, formData, {headers: headerParams});
     }
 }

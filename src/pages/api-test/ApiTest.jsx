@@ -3,6 +3,7 @@ import {connect} from 'dva';
 import {Select, Row, Col, Button, Input} from 'antd';
 import MyTestForm from './TestForm'
 import {FormattedMessage} from 'react-intl';
+import axios from 'axios'
 
 const Option = Select.Option;
 
@@ -14,7 +15,12 @@ function drawTestForm(clickedApi, httpKey, apiUrlPrefix, showDrawer){
 }
 
 function changeToken(e) {
-    window.localStorage.setItem("token", e.target.value)
+    const token = e.target.value
+    if (token) {
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + e.target.value
+    } else {
+        delete axios.defaults.headers.common['Authorization']
+    }
 }
 
 function drawTestPanel(clickedApi, httpKey, apiUrlPrefix, showDrawer) {
