@@ -140,19 +140,18 @@ class ApiDetailExtract {
         } else if (typeof (singleParamDefine.allowEmptyValue) !== 'undefined') {
             required = singleParamDefine.allowEmptyValue;
         }
-        // if (typeof (singleParamDefine.format) === 'undefined' || null === singleParamDefine.format) {
-        if (typeof (singleParamDefine.items) === 'undefined' || null === singleParamDefine.items) {
+        if (typeof (singleParamDefine.format) !== 'undefined' && null !== singleParamDefine.format) {
             paramDefine = {
                 key: ++this.globalKey,
                 default: defaultVal,
                 example: exampleVal,
-                required: required,
                 description: singleParamDefine.description,
                 summary: singleParamDefine.summary,
+                required: required,
                 name: singleParamDefine.name,
-                type: singleParamDefine.type
+                type: singleParamDefine.type + '(' + singleParamDefine.format + ')'
             }
-        } else {
+        } else if (typeof (singleParamDefine.items) !== 'undefined' && null !== singleParamDefine.items) {
             paramDefine = {
                 key: ++this.globalKey,
                 default: defaultVal,
@@ -162,6 +161,17 @@ class ApiDetailExtract {
                 required: required,
                 name: singleParamDefine.name,
                 type: singleParamDefine.type + '(' + singleParamDefine.items.type + ')'
+            }
+        } else {
+            paramDefine = {
+                key: ++this.globalKey,
+                default: defaultVal,
+                example: exampleVal,
+                required: required,
+                description: singleParamDefine.description,
+                summary: singleParamDefine.summary,
+                name: singleParamDefine.name,
+                type: singleParamDefine.type
             }
         }
         return paramDefine;
@@ -234,7 +244,6 @@ class ApiDetailExtract {
                 } else if (complexTypeDefine.properties[paramName].type === 'array' && typeof (complexTypeDefine.properties[paramName].items) !== 'undefined' && typeof (complexTypeDefine.properties[paramName].items['$ref']) !== 'undefined') {
                     // const required = complexTypeDefine.properties[paramName].allowEmptyValue;
                     const required = Util.arrayContainsVal(complexTypeDefine.required, paramName)
-                    console.log(required)
                     const realTypeName = this.extractRealParamTypeName(complexTypeDefine.properties[paramName].items['$ref']);
                     if (typeof (definitions[realTypeName]) !== 'undefined') {
                         const treeNode = {
