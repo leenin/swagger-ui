@@ -74,23 +74,9 @@ class DocSearchUI extends Component {
     onHandleChange(e) {
         let realVal = e.target.value.trim();
 
-        if (realVal.startsWith("http://")) {
-            realVal = realVal.replace(/http:\/\//, "")
-            this.setState({
-                docUrlHttpType: '1',
-                docUrlSuffix: realVal
-            });
-        } else if (realVal.startsWith("https://")) {
-            realVal = realVal.replace(/https:\/\//, "")
-            this.setState({
-                docUrlHttpType: '2',
-                docUrlSuffix: realVal
-            });
-        } else {
-            this.setState({
-                docUrlSuffix: realVal
-            });
-        }
+        this.setState({
+            docUrlSuffix: realVal
+        });
     }
 
     render() {
