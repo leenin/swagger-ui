@@ -11,7 +11,7 @@ import styles from './Header.css'
 import {injectIntl, IntlProvider, FormattedMessage} from 'react-intl';
 import Util from '@util/Util'
 
-import DocSearchAutoCompleteUI from './DocSearchAutoCompleteUI'
+import DocSearchUI from './DocSearchUI'
 import ToolbarUI from './ToolbarUI'
 
 import {Row, Col, Modal, Button} from 'antd';
@@ -134,8 +134,8 @@ class Header extends React.Component {
                         <div className='__divider'></div>
                     </Col>
                     <Col span={19} className={styles.maxHeight}>
-                        <div className={styles.docSearchAutoComplete}>
-                            <DocSearchAutoCompleteUI
+                        <div className={styles.docSearch}>
+                            <DocSearchUI
                                 onDocSearch={this.onDocSearch}
                                 placeholder={formatMessage({id: 'doc_search'})} type={type} url={url}/>
                         </div>

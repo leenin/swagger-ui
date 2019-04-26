@@ -2,15 +2,15 @@ import React, {Component} from 'react';
 
 import Util from '@support/util/Util';
 import PropTypes from 'prop-types'
-import styles from './DocSearchAutoComplete.css'
+import styles from './DocSearch.css'
 
-import {Select, AutoComplete, Input} from 'antd'
+import {Select, Input} from 'antd'
 
 const InputGroup = Input.Group;
 const Option = Select.Option;
 
 // UI组件
-class DocSearchAutoCompleteUI extends Component {
+class DocSearchUI extends Component {
 
     constructor(props) {
         super(props);
@@ -27,7 +27,7 @@ class DocSearchAutoCompleteUI extends Component {
             }]
         }
         this.onHandleChange = this.onHandleChange.bind(this)
-        this.onAutoCompleteSelect = this.onAutoCompleteSelect.bind(this)
+        this.onHandleEnter = this.onHandleEnter.bind(this)
         this.onHttpTypeChange = this.onHttpTypeChange.bind(this)
     }
 
@@ -52,13 +52,10 @@ class DocSearchAutoCompleteUI extends Component {
         }
     }
 
-    onAutoCompleteSelect(value, option) {
-        if (Util.strNotBlank(value)) {
-            const docUrlSuffix = value.trim();
+    onHandleEnter() {
+        const docUrlSuffix = this.state.docUrlSuffix
+        if (Util.strNotBlank(docUrlSuffix)) {
             this.props.onDocSearch(this.state.docUrlHttpType, docUrlSuffix);
-            this.setState({
-                docUrlSuffix
-            })
         }
     }
 
@@ -73,58 +70,22 @@ class DocSearchAutoCompleteUI extends Component {
         })
     }
 
-    onHandleChange(value) {
-        let realVal = value.trim();
+    onHandleChange(e) {
+        let realVal = e.target.value.trim();
 
         if (realVal.startsWith("http://")) {
             realVal = realVal.replace(/http:\/\//, "")
         } else if (realVal.startsWith("https://")) {
             realVal = realVal.replace(/https:\/\//, "")
         }
-        if (realVal.endsWith("/v2/api-docs")) {
-            realVal = realVal.substring(0, realVal.length - "/v2/api-docs".length);
-        }
-        if (Util.strNotBlank(realVal)) {
-            if (realVal.indexOf('loc') >= 0) {
-                const tipsArr = [
-                    `localhost/v2/api-docs`,
-                    `localhost:8080/v2/api-docs`
-                ];
-                if (realVal.indexOf('/') >= 0) {
-                    this.setState({
-                        dataSourceArr: [realVal,realVal + '/v2/api-docs'],
-                        docUrlSuffix: realVal
-                    });
-                } else {
-                    if (!Util.arrayContainsVal(tipsArr, `${realVal}/v2/api-docs`)) {
-                        tipsArr.unshift(`${realVal}/v2/api-docs`);
-                        tipsArr.unshift(`${realVal}`);
-                    }
-                    this.setState({
-                        dataSourceArr: tipsArr,
-                        docUrlSuffix: realVal
-                    });
-                }
-            } else {
-                const dataSourceArr = [
-                    `${realVal}`,
-                    `${realVal}/v2/api-docs`,
-                ];
-                this.setState({
-                    dataSourceArr,
-                    docUrlSuffix: realVal
-                });
-            }
-        } else {
-            console.log(122)
-            this.setState({
-                dataSourceArr: []
-            });
-        }
+
+        this.setState({
+            docUrlSuffix: realVal
+        });
     }
 
     render() {
-        const {docUrlHttpType, docUrlHttpTypeArr, dataSourceArr, docUrlSuffix} = this.state;
+        const {docUrlHttpType, docUrlHttpTypeArr, docUrlSuffix} = this.state;
         const {placeholder} = this.props;
         return (
             <InputGroup compact>
@@ -134,25 +95,24 @@ class DocSearchAutoCompleteUI extends Component {
                         <Option key={index} value={item.flag}>{item.val}</Option>
                     ))}
                 </Select>
-                <AutoComplete
-                    dataSource={dataSourceArr}
+                <Input
                     style={{width: "calc(100% - 180px)"}}
                     onChange={this.onHandleChange}
-                    onSelect={this.onAutoCompleteSelect}
+                    onPressEnter={this.onHandleEnter}
                     placeholder={placeholder}
                     defaultValue={docUrlSuffix}
-                ></AutoComplete>
+                ></Input>
             </InputGroup>
         );
     }
 
 }
 
-DocSearchAutoCompleteUI.propTypes = {
+DocSearchUI.propTypes = {
     placeholder: PropTypes.string,
     onDocSearch: PropTypes.func,
     type: PropTypes.string,
     url: PropTypes.string
 }
 
-export default DocSearchAutoCompleteUI;
+export default DocSearchUI;
