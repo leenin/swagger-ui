@@ -74,7 +74,7 @@ class DocSearchAutoCompleteUI extends Component {
     }
 
     onHandleChange(value) {
-        let realVal = value.trim().toLowerCase();
+        let realVal = value.trim();
 
         if (realVal.startsWith("http://")) {
             realVal = realVal.replace(/http:\/\//, "")
