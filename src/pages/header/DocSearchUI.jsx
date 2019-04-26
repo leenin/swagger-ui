@@ -54,8 +54,9 @@ class DocSearchUI extends Component {
 
     onHandleEnter() {
         const docUrlSuffix = this.state.docUrlSuffix
+        const docUrlHttpType = this.state.docUrlHttpType
         if (Util.strNotBlank(docUrlSuffix)) {
-            this.props.onDocSearch(this.state.docUrlHttpType, docUrlSuffix);
+            this.props.onDocSearch(docUrlHttpType, docUrlSuffix);
         }
     }
 
@@ -75,13 +76,21 @@ class DocSearchUI extends Component {
 
         if (realVal.startsWith("http://")) {
             realVal = realVal.replace(/http:\/\//, "")
+            this.setState({
+                docUrlHttpType: '1',
+                docUrlSuffix: realVal
+            });
         } else if (realVal.startsWith("https://")) {
             realVal = realVal.replace(/https:\/\//, "")
+            this.setState({
+                docUrlHttpType: '2',
+                docUrlSuffix: realVal
+            });
+        } else {
+            this.setState({
+                docUrlSuffix: realVal
+            });
         }
-
-        this.setState({
-            docUrlSuffix: realVal
-        });
     }
 
     render() {
