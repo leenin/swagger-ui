@@ -111,7 +111,6 @@ class ApiDetailExtract {
             }
         }
 
-
         return result;
     }
 
@@ -186,7 +185,7 @@ class ApiDetailExtract {
      */
     extractSingleComplexParam(complexTypeDefine, definitions, callSize) {
         const resultArr = [];
-        if (callSize > 6) {//避免陷入无限递归(设置最大递归层数)
+        if (callSize > 10) {//避免陷入无限递归(设置最大递归层数)
             return resultArr;
         }
         if (typeof (complexTypeDefine.properties) !== 'undefined' && null !== complexTypeDefine.properties) {
