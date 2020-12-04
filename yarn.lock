@@ -1614,9 +1614,10 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-highlight.js@^9.15.6:
-  version "9.15.6"
-  resolved "http://registry.npm.taobao.org/highlight.js/download/highlight.js-9.15.6.tgz#72d4d8d779ec066af9a17cb14360c3def0aa57c4"
+highlight.js@^10.4.1:
+  version "10.4.1"
+  resolved "https://registry.npm.taobao.org/highlight.js/download/highlight.js-10.4.1.tgz#d48fbcf4a9971c4361b3f95f302747afe19dbad0"
+  integrity sha1-1I+89KmXHENhs/lfMCdHr+GdutA=
 
 history@^4.6.3, history@^4.7.2:
   version "4.7.2"
