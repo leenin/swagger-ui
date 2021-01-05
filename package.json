@@ -4,7 +4,7 @@
   },
   "dependencies": {
     "antd": "^3.16.5",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "codemirror": "^5.40.0",
     "debounce": "^1.2.0",
     "highlight.js": "^9.15.6",
